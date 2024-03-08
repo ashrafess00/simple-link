@@ -7,6 +7,7 @@ import { Result } from "postcss";
 export default async function handler(req, res) {
     const { method } = req;
 
+    await dbConnect();
     if (method === 'POST') {
         const { email, password } = req.body;
         
