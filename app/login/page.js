@@ -4,20 +4,41 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { getJwt } from "../lib/getJwt";
 
 export default function page() {
+
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
-    
-    function submitForm (e) {
+    const router = useRouter();
+    async function submitForm (e) {
         e.preventDefault();
-        if (email === "")
+        if (email === "") {
             setEmailError(true);
-        if (password === "")
+            return;
+        }
+        if (password === "") {
             setPasswordError(true);
+            return;
+        }
+
+        fetch("/api/login", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email, password})
+        })
+        .then(res => {
+            if (!res.ok)
+                throw new Error("there is an error");
+            router.push('/testpage');
+        })
+        .catch(error => {
+            console.log(error);
+        })
 
     }
 
@@ -39,21 +60,21 @@ export default function page() {
                 <form className="flex flex-col" onSubmit={submitForm}>
                     <label>Email address</label>
                     <input placeholder="e.g.alex@email.com" type="text" className="border-2 border-black p-4"
-                    // value={email}
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     
                     />
 
                     <label>Password</label>
                     <input placeholder="Enter your password" type="password" className="border-2 border-black p-4"
-                    // value={password}
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
 
                     <input type="submit" value="Login" className="border-2 bg-violet-300 mt-5 cursor-pointer"/>
                 </form>
 
-                <p>Don't have an account?</p>
+                <p className="btn_default p-1 border-2">Don't have an account?</p>
                 <Link href="/register">Create account</Link>
 
             </main>

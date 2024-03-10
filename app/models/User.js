@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+const urls = new mongoose.Schema({
+    name: String,
+    url: String
+})
+
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -10,7 +15,8 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "please type password"],
         unique: false,
-    }
+    },
+    userUrls: [urls],
 })
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
