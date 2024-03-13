@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
         unique: false,
     },
     userUrls: [urls],
+    avatar: { type: String }
 })
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

@@ -68,7 +68,7 @@ export default function CustomizeUrls({urls, setUrls}) {
 
                         <p>Link #{key + 1}</p>
                         <Select
-                            defaultValue={url.name}
+                            defaultValue={{label: url.name, value: url.name}}
                             options={listMenu}
                             isSearchable={false}
                             className="p-3"
