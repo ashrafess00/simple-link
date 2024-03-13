@@ -3,11 +3,13 @@ import verifyToken from "@/app/lib/verifyToken";
 import User from "@/app/models/User";
 import { cookies } from "next/headers";
 
+//add links
 export async function POST(req) {
     try {
         const {urlsToBeAdded} = await req.json();
         const userJwt = cookies().get("access-token")?.value;
         const { userId } = await verifyToken(userJwt);
+
 
         await dbConnect();
         const user = await User.findById(userId);
@@ -32,5 +34,11 @@ export async function POST(req) {
         console.log("error: ", error);
         return Response.json({error});
     }
+}
+
+export async function DELETE(req) {
+    const {urlsToBeDeleted} = await req.json();
+    const userJwt = cookies().get("access-token")?.value;
+    const { userId } = await verifyToken(userJwt);
 }
 

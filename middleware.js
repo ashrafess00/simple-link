@@ -9,9 +9,8 @@ export async function middleware(req) {
     const value = cookies().get('access-token')?.value;
     try {
         await verifyToken(value);
-        console.log("hi: ", req.nextUrl.pathname);
         if (req.nextUrl.pathname == '/login')
-            return Response.redirect(new URL('/testpage', req.url));
+            return Response.redirect(new URL('/dashboard', req.url));
     }
     catch(error) {
         return Response.redirect(new URL('/login', req.url));
@@ -19,5 +18,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-    matcher: '/testpage/:path*'
+    matcher: '/dashboard'
 }

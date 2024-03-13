@@ -17,17 +17,8 @@ export async function POST(req) {
             const checkedPass = await bcrypt.compare(password, user.password);
             
             if (checkedPass) {
-                // const token = await new SignJWT({
-                //     userId: user._id,
-                //     userEmail: user.email,
-                // })
-                // .setProtectedHeader({alg: 'HS256'})
-                // .setIssuedAt()
-                // .setExpirationTime('24h')
-                // .sign(new TextEncoder().encode(process.env.JWT_SECRET_KEY));
 
                 const token = await singToken(user);
-                // console.log("token: ", token);
 
                 //set jwt to request coockie
                 cookies().set({

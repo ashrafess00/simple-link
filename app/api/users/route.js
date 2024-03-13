@@ -10,17 +10,18 @@ export async function GET(req) {
 
     try {
         const jwt = cookies().get('access-token')?.value;
-        const {userId} = await verifyToken(jwt);
-        const user = await User.findById(userId);
+        const data = await verifyToken(jwt);
+        // const user = await User.findById(userId);
 
-        if (user) {
-            return Response.json(user);
+        console.log(data)
+        if (data) {
+            return Response.json(data);
         }
-        return Response.json({user});
+        return Response.json({error: "error"});
     }
     catch(error) {
         console.log(error);
-        return Response.json({success: false});
+        return Response.json({success: error}, {status: 400});
     }
 }
 

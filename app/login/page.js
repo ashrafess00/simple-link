@@ -34,7 +34,7 @@ export default function page() {
         .then(res => {
             if (!res.ok)
                 throw new Error("there is an error");
-            router.push('/testpage');
+            router.push('/dashboard');
         })
         .catch(error => {
             console.log(error);

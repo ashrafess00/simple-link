@@ -1,11 +1,19 @@
 'use client';
 import Image from "next/image";
+// import {signIn} from 'next-auth/client';
 
-export default function Home() {
+export default async function Home() {
 
-  function dd() {
-    console.log('hi there');
-  }
+  // const ion =  { Email: "mail2@mail.com", Password: "pass" };
+
+  // async function dd() {
+  //   const res = await signIn('credentials',{
+  //     redirect: false,
+  //    ...ion
+  //   })
+
+  //   console.log(res);
+  // }
   
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

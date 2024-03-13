@@ -5,6 +5,7 @@ export async function singToken(user) {
         const token = await new SignJWT({
             userId: user._id,
             userEmail: user.email,
+            userUrls: user.userUrls,
         })
         .setProtectedHeader({alg: 'HS256'})
         .setIssuedAt()
