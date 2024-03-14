@@ -6,6 +6,7 @@ export async function singToken(user) {
             userId: user._id,
             userEmail: user.email,
             userUrls: user.userUrls,
+            avatar: user.avatar,
         })
         .setProtectedHeader({alg: 'HS256'})
         .setIssuedAt()

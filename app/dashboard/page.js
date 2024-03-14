@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 import CustomizeUrls from './CustomizeUrls';
@@ -10,8 +10,15 @@ import Phone from "../ui/Phone";
 export default function page() {
 
     const [userData, setUserData] = useState({});
+    const [avatar, setAvatar] = useState();
     const [urls, setUrls] = useState([]);
     const [tab, setTab] = useState(false);
+
+    const [img, setImg] = useState("");
+    const [uploadInput, setUploadInput] = useState();
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email2, setEmail2] = useState("");
 
     useEffect(() => {
         fetch ("/api/users")
@@ -23,6 +30,7 @@ export default function page() {
         .then(data => {
         {
             setUrls(data.userUrls);
+            setAvatar(data.avatar);
         }
         })
         .catch(error => {
@@ -30,7 +38,43 @@ export default function page() {
         })
     }, [])
 
+    async function saveData(e) {
+
+        console.log(firstName, lastName, email2);
+        return;
+        //
+        if (tab) {
+
+        }
+        //we are on profile
+        else {
+            
+            const input = uploadInput.current;
+            const formData = new FormData();
+
+
+            // console.log(input);
+            if (input.files) {
+                const imgName = input.files[0].name;
+                const img = input.files[0];
+                formData.append(imgName, img);
+
+                try {
+                    const res = await fetch("/api/uploadImg", {
+                        method: 'POST',
+                        body: formData
+                    });
     
+                    if (!res.ok)
+                        throw new Error("images wasn't uploaded");
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            }
+        }
+    }
+
 
     
 
@@ -47,15 +91,28 @@ export default function page() {
         </nav>
 
 
-        <main className="bg-grey-3 lg:flex">
+        <main className="bg-grey-3 lg:flex p-6">
             <div className="hidden lg:block">
                 <Phone />
             </div>
             {tab ?
             <CustomizeUrls urls={urls} setUrls={setUrls}/>
-            : <Profile />
+            : <Profile
+                avatar={avatar}
+                img={img}
+                setImg={setImg}
+                uploadInput={uploadInput}
+                setUploadInput={setUploadInput}
+                setFirstName={setFirstName}
+                setLastName={setLastName}
+                setEmail2={setEmail2}
+                />
             }
         </main>
+
+        <section className="bg-white p-4 border-t-grey-1 border-t-2">
+            <button onClick={saveData} className="bg-violet-1 w-full rounded-md p-4 text-white">Save</button>
+        </section>
         </>
     )
 }
