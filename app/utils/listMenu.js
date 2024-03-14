@@ -12,7 +12,7 @@ export const listMenu = [
     },
     {
         value: 'X',
-        label: <div className="flex"><img className="mr-5" src="images/icons/icon-twitter.svg" width={w} height={w} />Facebook</div>,
+        label: <div className="flex"><img className="mr-5" src="images/icons/icon-twitter.svg" width={w} height={w} />X</div>,
     },
     {
         value: 'LinkedIn',

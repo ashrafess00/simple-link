@@ -10,18 +10,6 @@ import verifyToken from "@/app/lib/verifyToken";
 
 import {Readable} from "stream";
 
-export async function GET(req, {params}) {
-    const {client, bucket } = await dbConnect();
-
-    try {
-        const files = await bucket.find({filename: "bird_with_dog_face.jfpg"}).toArray();
-        console.log(files);
-        return Response.json({files});
-    }
-    catch(error) {
-        return Response.json({error})
-    }
-}
 
 export async function POST(req) {
 
@@ -43,7 +31,7 @@ export async function POST(req) {
             
             if (isFile) {
                 const blob = value;
-                const filename = blob.name;
+                const filename = Date.now() + blob.name;
 
                 //i will check if file exists
 

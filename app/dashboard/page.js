@@ -6,13 +6,17 @@ import { useEffect, useRef, useState } from "react";
 import CustomizeUrls from './CustomizeUrls';
 import Profile from "./Profile";
 import Phone from "../ui/Phone";
+import { addUrls, deleteUrls, editUrls } from "../lib/manageUrlsCalls";
+// import { singToken } from "../lib/verifyToken";
+import Cookies from 'js-cookie';
+
 
 export default function page() {
 
     const [userData, setUserData] = useState({});
     const [avatar, setAvatar] = useState();
     const [urls, setUrls] = useState([]);
-    const [tab, setTab] = useState(false);
+    const [tab, setTab] = useState(true);
 
     const [img, setImg] = useState("");
     const [uploadInput, setUploadInput] = useState();
@@ -36,19 +40,35 @@ export default function page() {
         .catch(error => {
             console.log('lerrorat')
         })
-    }, [])
+
+    }, []);
+
+
 
     async function saveData(e) {
 
-        console.log(firstName, lastName, email2);
-        return;
         //
         if (tab) {
+            const addedUrls = urls.filter(e => e.status === "added");
+            const editedUrls = urls.filter(e => (e.status === "edited" && e._id));
+            const deletedUrls = urls.filter(e => (e.status === "deleted" && e._id));
+
+            try {
+                await addUrls(addedUrls);
+                await editUrls(editedUrls);
+                await deleteUrls(deletedUrls);
+                
+
+                // await singToken();
+            }
+            catch(error) {
+                console.log(error);
+            }
+
 
         }
         //we are on profile
         else {
-            
             const input = uploadInput.current;
             const formData = new FormData();
 

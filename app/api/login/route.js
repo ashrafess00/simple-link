@@ -24,7 +24,7 @@ export async function POST(req) {
                 cookies().set({
                     name: 'access-token',
                     value: token,
-                    httpOnly: true,
+                    
                     path: '/',
                 })
 

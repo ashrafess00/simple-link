@@ -37,16 +37,16 @@ export default function CustomizeUrls({urls, setUrls}) {
     }
 
     const save = () => {
-        const addedUrls = urls.filter(e => e.status === "added");
+        // const addedUrls = urls.filter(e => e.status === "added");
 
-        const editedUrls = urls.filter(e => (e.status === "edited" && e._id));
+        // const editedUrls = urls.filter(e => (e.status === "edited" && e._id));
 
-        const deletedUrls = urls.filter(e => (e.status === "deleted" && e._id));
+        // const deletedUrls = urls.filter(e => (e.status === "deleted" && e._id));
 
-        //here api will be called to CRUD items
-        console.log(addedUrls);
-        console.log(editedUrls);
-        console.log(deletedUrls);
+        // //here api will be called to CRUD items
+        // console.log(addedUrls);
+        // console.log(editedUrls);
+        // console.log(deletedUrls);
     }
 
     return (
@@ -88,7 +88,6 @@ export default function CustomizeUrls({urls, setUrls}) {
             }
         })
         }
-        <button onClick={save} className='bg-violet-1 p-4'>save</button>
         </>
     )
 }
