@@ -9,6 +9,7 @@ import Phone from "../ui/Phone";
 import { addUrls, deleteUrls, editUrls } from "../lib/manageUrlsCalls";
 // import { singToken } from "../lib/verifyToken";
 import Cookies from 'js-cookie';
+import { listMenu } from "../utils/listMenu";
 
 
 export default function page() {
@@ -23,6 +24,7 @@ export default function page() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email2, setEmail2] = useState("");
+    const [options, setOptions] = useState(listMenu);
 
     useEffect(() => {
         fetch ("/api/users")
@@ -40,7 +42,6 @@ export default function page() {
         .catch(error => {
             console.log('lerrorat')
         })
-
     }, []);
 
 
@@ -111,12 +112,19 @@ export default function page() {
         </nav>
 
 
-        <main className="bg-grey-3 lg:flex p-6">
+        <main className="bg-grey-3 lg:flex">
             <div className="hidden lg:block">
                 <Phone />
             </div>
+
+            <div className="p-4 bg-grey-3 text-grey-1">
             {tab ?
-            <CustomizeUrls urls={urls} setUrls={setUrls}/>
+            <CustomizeUrls 
+                urls={urls}
+                setUrls={setUrls}
+                options={options}
+                setOptions={setOptions}
+            />
             : <Profile
                 avatar={avatar}
                 img={img}
@@ -126,12 +134,14 @@ export default function page() {
                 setFirstName={setFirstName}
                 setLastName={setLastName}
                 setEmail2={setEmail2}
+                
                 />
             }
+            </div>
         </main>
 
-        <section className="bg-white p-4 border-t-grey-1 border-t-2">
-            <button onClick={saveData} className="bg-violet-1 w-full rounded-md p-4 text-white">Save</button>
+        <section className="sticky bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
+            <button onClick={saveData} className="w-full btn-primary">Save</button>
         </section>
         </>
     )

@@ -1,15 +1,19 @@
 import Select from 'react-select';
 import { listMenu } from "@/app/utils/listMenu";
+import { useEffect, useState } from 'react';
+import { list } from 'postcss';
 
-export default function CustomizeUrls({urls, setUrls}) {
+export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
     function addNewLink() {
         //add the object to the urls
-        setUrls(purl => {
-            const updatedPurl = [...purl];
-            updatedPurl.push({name: listMenu[0].value, url:"", status: "added"})
-            return updatedPurl;
-        });
+        if (options.length > 0) {
+            setUrls(purl => {
+                    const updatedPurl = [...purl];
+                    updatedPurl.push({name: options[0].value, url:"", status: "added"})
+                    return updatedPurl;
+            });
+        }
     }
 
     const changeUrlVal = (index) => (e) => {
@@ -29,6 +33,7 @@ export default function CustomizeUrls({urls, setUrls}) {
 
 
     const deleteUrl = (index) => (e) => {
+
         setUrls(purl => {
             const updatedUrls = [...purl];
             updatedUrls[index] = {...updatedUrls[index], status: "deleted"};
@@ -36,58 +41,79 @@ export default function CustomizeUrls({urls, setUrls}) {
         })
     }
 
-    const save = () => {
-        // const addedUrls = urls.filter(e => e.status === "added");
+    const [opts, setOpts] = useState(listMenu);
 
-        // const editedUrls = urls.filter(e => (e.status === "edited" && e._id));
+    useEffect(() => {
+        // console.log(options);
+        // console.log(urls);
 
-        // const deletedUrls = urls.filter(e => (e.status === "deleted" && e._id));
+    if (urls.length > 0) {
+        const nameInArr2 = new Set(urls.map(obj => {
+            if (obj.status !== 'deleted')
+                return obj.name;
+            return "";
+        }));
 
-        // //here api will be called to CRUD items
-        // console.log(addedUrls);
-        // console.log(editedUrls);
-        // console.log(deletedUrls);
+        console.log(nameInArr2);
+        
+        const filteredArray = listMenu.filter(obj => !nameInArr2.has(obj.value));
+        console.log(filteredArray);
+        setOptions(filteredArray);
     }
+}, [urls]);
+    
 
+       
     return (
-        <>
-        <h2>something</h2>
+        <div className='bg-white rounded-md p-6 p-t-8'>
+        <h2 className='text-2xl font-bold mb-2 text-dark'>Customize your links</h2>
+        <p className='text-grey-1 mb-10'>Add/edit/remove links below and then share all your profiles with the world!</p>
 
-        <button className="border-violet-1 text-violet-1"
+        <button
+        className="btn-secondary w-full mb-4"
         onClick={addNewLink}
         >
         +Add new link
         </button>
 
+
+
         {
+            urls.length == 0 ? <div>mama</div> : 
             urls.map((url, key) => {
                 if (url.status != 'deleted') {
                 return (
-                    <div className="p-4 border-dark cursor-pointer"
+                    <div className="p-6 mb-6 border-dark cursor-pointer bg-grey-3"
                         key={key}>
 
-                        <p>Link #{key + 1}</p>
+                        <div className='flex justify-between mb-4'>
+                            <p className='font-bold'>Link #{key + 1}</p>
+                            <div onClick={deleteUrl(key)} className='hover:text-violet-1'>Remove</div>
+                        </div>
+                        <label className='block mb-2'>Platform</label>
                         <Select
                             defaultValue={{label: url.name, value: url.name}}
-                            options={listMenu}
+                            options={options}
                             isSearchable={false}
-                            className="p-3"
+                            className="w-full mb-6 cursor-pointer"
                             onChange={changeUrlVal(key)}
                             name="listMenu"
-                    />
-                        <input
-                        type="text"
-                        placeholder="bla bla"
-                        className="border-dark"
-                        value={url.url}
-                        onChange={changeUrlVal(key)}/>
-
-                        <div onClick={deleteUrl(key)} className='hover:text-violet-1'>Remove Item</div>
+                        />
+                        <label className='block mb-2'>Link</label>
+                        <div className='relative'>
+                            <input
+                            type="text"
+                            placeholder="e.g. https://www.github.com/johnappleseed"
+                            className="input w-full"
+                            value={url.url}
+                            onChange={changeUrlVal(key)}/>
+                            {/* <img className='absolute inset-y-0 left-0' src='/images/icons/icon-links-header.svg' /> */}
+                        </div>                        
                     </div>
                 )
             }
         })
         }
-        </>
+        </div>
     )
 }
