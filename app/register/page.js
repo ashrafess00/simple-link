@@ -1,49 +1,141 @@
+'use client';
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+
 
 
 export default function page() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    function submitForm(e) {
+        e.preventDefault();
+        if (email === "")
+            return setEmailError("Can't be empty");
+        if (password === "")
+            return setPasswordError("Can't be empty");
+        if (confirmPassword == "")
+            return setConfirmPasswordError("can't be empty");
+        if (password !== confirmPassword) {
+
+            return setPasswordError("check again");
+        }
+
+        fetch("/api/register", {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email, password})
+        })
+        .then(async res => {
+            setLoading(true);
+            if (!res.ok)
+            {
+                const {message} = await res.json();
+                if (message == 'Email already exists')
+                    setPasswordError(message);
+                else
+                    setPasswordError("please check again");
+                throw new Error("can't register");
+            }
+        })
+        .then((data) => {
+            router.push('login');
+        })
+        .catch(error => {
+            setLoading(false);
+        })
+    }
+
+    useEffect(() => {
+        if (confirmPassword !== '' && confirmPassword !== password) {
+            setConfirmPasswordError("Passwords don't match");
+        } else {
+            setConfirmPasswordError('');
+        }
+    }, [password, confirmPassword])
+
+
     return (
-        <div className="p-8">
-            <header className="flex flex-row ">
-                    <Image src="images/logo-devlinks-large.svg"
-                        width={500}
-                        height={500}
-                        alt="logo"
-                        className="w-1/2"
-                        />
-                    <div></div>
-            </header>
-            <main className="">
-                <h3 className="">Create account</h3>
-                <p>Let’s get you started sharing your links!</p>
-
-                <form className="flex flex-col mt-20">
-                    <label>Email address</label>
-                    <input placeholder="e.g.alex@email.com"
-                        type="text"
-                        className="border-2 border-black p-4"
-                        placeholder="e.g. alex@email.com"
+        <div className="p-8 h-dvh md:flex md:justify-center md:items-center md:flex-col">
+            <header className="flex flex-row">
+                <Image src="images/logo-devlinks-large.svg"
+                    width={500}
+                    height={500}
+                    alt="logo"
+                    className="w-1/2 md:w-3/4 md:mx-auto"
                     />
+                <div></div>
+            </header>
+            <main className="md:p-20 md:rounded-lg mt-20 md:mt-8 max-w-screen-2xl mx-auto  md:bg-white h-fit">
+                <h3 className="font-bold text-2xl mb-2">Create account</h3>
+                <p className="text-grey-1 mb-8">Let’s get you started sharing your links!</p>
 
-                    <label>Create password</label>
-                    <input type="password" 
-                        placeholder="At least .8 characters"
-                        className="border-2 border-black p-4"/>
+                <form className="flex flex-col text-grey-1" onSubmit={submitForm}>
+                    <label className='text-sm mb-2'>Email address</label>
+                    <div className="w-full relative mb-8">
+                        <input placeholder="e.g.alex@email.com"
+                            type="text"
+                            className={`input w-full  ${emailError && "input-error"}`}
+                            value={email}
+                            onChange={(e) => {
+                                setEmail(e.target.value)
+                                setEmailError("");
+                                setPasswordError("");
+                            }}
+                        />
+                        {emailError
+                        && <span className="text-sm font-thin text-red absolute right-4 inset-y-0 text-center flex items-center">{emailError}</span>}
+                    </div>
 
-                    <label>Confirm password</label>
-                    <input type="password" 
-                        placeholder="At least .8 characters"
-                        className="border-2 border-black p-4"/>
-                    <p>Password must contain at least 8 characters</p>
+                    <label className='text-sm mb-2'>Password</label>
+                    <div className="w-full relative mb-8">
+                        <input placeholder="Atleast .8 characters"
+                            type="password"
+                            className={`input w-full  ${passwordError && "input-error"}`}
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                setPasswordError("");
+                                setEmailError("");
+                            }}
+                        />
+                        {passwordError
+                        && <span className="text-sm font-thin text-red absolute right-4 inset-y-0 text-center flex items-center">{passwordError}</span>}
+                    </div>
+
+                    {/* confirm password */}
+                    <label className='text-sm mb-2'>Confirm password</label>
+                    <div className="w-full relative mb-8">
+                        <input placeholder="At least .8 characters"
+                            type="password"
+                            className={`input w-full  ${confirmPasswordError && "input-error"}`}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        {confirmPasswordError
+                        && <span className="text-sm font-thin text-red absolute right-4 inset-y-0 text-center flex items-center">{confirmPasswordError  }</span>}
+                    </div>
 
                     <input type="submit"
-                        className="bg-green-300"
-                        value={"Create new account"} />
+                        value={loading ? "please wait ..." : "Create new account"}
+                        className={` btn-primary my-6 ${loading && 'btn-disabled'}`}/>
                 </form>
 
-                <p>Already have an account?</p>
-                <Link href="/login">Login</Link>
+                <div className="md:flex justify-center gap-1">
+                    <p className="text-center text-grey-1">Already have an account?</p>
+                    <Link className="text-center  text-violet-1 hover:text-violet-2 transition duration-2 block" href="/login">Login</Link>
+                </div>
+
             </main>
         </div>
     )

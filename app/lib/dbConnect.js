@@ -35,4 +35,15 @@ async function dbConnect() {
     return {client, bucket};
 }
 
+async function isAvatarExists(filename) {
+    try {
+        const file = await bucket.find({filename}).toArray();
+        console.log(file);
+        return file.length > 0;
+    }
+    catch (error) {
+        return false;
+    }
+}
+
 export default dbConnect;

@@ -12,6 +12,7 @@
         padding: 0.5rem 3rem;
         transition: all 0.4s;
         font-weight: theme('fontWeight.medium');
+        cursor: pointer;
     }
 
     .btn-secondary {
@@ -21,6 +22,8 @@
         padding: 0.5rem 3rem;
         transition: all 0.4s;
         font-weight: theme('fontWeight.medium');
+        cursor: pointer;
+
     }
 
     .btn-primary:hover {
@@ -50,9 +53,25 @@
         border: 1px solid theme('colors.red');
     }
     .input:focus {
-        box-shadow: 1px 1px 8px theme('colors.violet.1');
+        box-shadow: 1px 1px 20px theme('colors.violet.2');
     }
     .input-error:focus {
         box-shadow: none;
     }
+
+    /* .nn::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: -0.5rem;
+        bottom: -0.5rem;
+        right: -1.2rem;
+        left: -1.2rem;
+        background-color: theme('colors.violet.3');
+        border-radius: 0.3rem;
+    } */
+}
+
+body {
+    background-color: #FAFAFA;
 }

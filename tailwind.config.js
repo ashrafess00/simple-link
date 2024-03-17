@@ -20,6 +20,11 @@ module.exports = {
       white: '#FFFFFF',
       dark: '#333333',
       red: '#FF3939',
+      github_color: '#1A1A1A',
+      frontendMentor_color: 'white',
+      linkedIn_color: '#2D68FF',
+      youtube_color: '#EE3939',
+
     },
     btn_default: {
       backgroundColor: "#633CFF",

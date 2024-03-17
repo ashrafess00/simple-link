@@ -2,15 +2,29 @@ import Select from 'react-select';
 import { listMenu } from "@/app/utils/listMenu";
 import { useEffect, useState } from 'react';
 import { list } from 'postcss';
+import GetStarted from '../ui/GetStarted';
 
 export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
-
+    // const [opts, setOpts] = useState(listMenu);
+    
+    useEffect(() => {
+        if (urls.length > 0) {
+            const nameInArr2 = new Set(urls.map(obj => {
+                if (obj.status !== 'deleted')
+                    return obj.name;
+                return "";
+            }));
+            
+            const filteredArray = listMenu.filter(obj => !nameInArr2.has(obj.value));
+            setOptions(filteredArray);
+        }
+    }, [urls]);
+    
     function addNewLink() {
-        //add the object to the urls
         if (options.length > 0) {
             setUrls(purl => {
                     const updatedPurl = [...purl];
-                    updatedPurl.push({name: options[0].value, url:"", status: "added"})
+                    updatedPurl.push({name: options[0].value, url:"",})
                     return updatedPurl;
             });
         }
@@ -23,9 +37,9 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
             //if select changed
             if (value)
-                updatedUrls[index] = {...updatedUrls[index], name: value, status: updatedUrls[index].status == "added" ? "added" : "edited"};
+                updatedUrls[index] = {...updatedUrls[index], name: value};
             else 
-                updatedUrls[index] = {...updatedUrls[index], url: target.value , status: updatedUrls[index].status == "added" ? "added" : "edited"};
+                updatedUrls[index] = {...updatedUrls[index], url: target.value};
 
             return updatedUrls;
         })
@@ -34,39 +48,22 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
     const deleteUrl = (index) => (e) => {
 
+        console.log(index);
         setUrls(purl => {
-            const updatedUrls = [...purl];
-            updatedUrls[index] = {...updatedUrls[index], status: "deleted"};
+            let updatedUrls = [...purl];
+            updatedUrls.splice(index, 1);
             return updatedUrls;
         })
     }
 
-    const [opts, setOpts] = useState(listMenu);
 
-    useEffect(() => {
-        // console.log(options);
-        // console.log(urls);
-
-    if (urls.length > 0) {
-        const nameInArr2 = new Set(urls.map(obj => {
-            if (obj.status !== 'deleted')
-                return obj.name;
-            return "";
-        }));
-
-        console.log(nameInArr2);
-        
-        const filteredArray = listMenu.filter(obj => !nameInArr2.has(obj.value));
-        console.log(filteredArray);
-        setOptions(filteredArray);
-    }
-}, [urls]);
+    
     
 
        
     return (
-        <div className='bg-white rounded-md p-6 p-t-8'>
-        <h2 className='text-2xl font-bold mb-2 text-dark'>Customize your links</h2>
+        <div className='z-50 overflow-auto bg-white rounded-md p-6 p-t-8 max-w-screen-2xl'>
+        <h2 className='mt-10 text-2xl font-bold mb-2 text-dark'>Customize your links</h2>
         <p className='text-grey-1 mb-10'>Add/edit/remove links below and then share all your profiles with the world!</p>
 
         <button
@@ -79,9 +76,10 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
 
         {
-            urls.length == 0 ? <div>mama</div> : 
+            (urls.length == 0)
+            ? <GetStarted />
+            : 
             urls.map((url, key) => {
-                if (url.status != 'deleted') {
                 return (
                     <div className="p-6 mb-6 border-dark cursor-pointer bg-grey-3"
                         key={key}>
@@ -92,12 +90,18 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
                         </div>
                         <label className='block mb-2'>Platform</label>
                         <Select
-                            defaultValue={{label: url.name, value: url.name}}
+                            value={{label: url.name, value: url.name}}
                             options={options}
                             isSearchable={false}
-                            className="w-full mb-6 cursor-pointer"
                             onChange={changeUrlVal(key)}
                             name="listMenu"
+                            styles={{
+                                control: (baseStyles, state) => ({
+                                    ...baseStyles,
+                                    cursor: 'pointer',
+                                    marginBottom: '1rem'
+                                }),
+                            }}
                         />
                         <label className='block mb-2'>Link</label>
                         <div className='relative'>
@@ -111,7 +115,6 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
                         </div>                        
                     </div>
                 )
-            }
         })
         }
         </div>

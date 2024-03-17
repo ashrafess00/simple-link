@@ -1,60 +1,55 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { ImageUploading } from "react-images-uploading";
+import { isImageBig } from "../lib/handleImageUpload";
 export default function Profile({avatar, img, setImg, input, setUploadInput, setFirstName, setLastName, setEmail2}) {
 
-    // const [img, setImg] = useState("");
     useEffect(() => {
-        if (avatar)
+        if (avatar) {
             setImg("/api/" + avatar);
+        }
+        console.log("avatar: ", avatar);
     }, [avatar])
 
 
     const ref = useRef(null);
-    async function uploadImage(e) {
-        //this will upload the image to the data-base
-        e.preventDefault();
-
-        // const input = ref.current;
-        // const formData = new FormData();
-        
-        // if (input.files) {
-        //     const imgName = input.files[0].name;
-        //     const img = input.files[0];
-        //     formData.append(imgName, img);
-
-        //     const res = await fetch("/api/uploadImg", {
-        //         method: 'POST',
-        //         body: formData
-        //     });
-        // }
-    }
 
     function onChange(e) {
         setUploadInput(ref);
+
         const input = ref.current;
         const file = input.files[0];
+
+
         const reader = new FileReader();
+        reader.readAsDataURL(file);
 
-        reader.onload = () => {
-            setImg(reader.result);
+        reader.onload = async (e) => {
+
+            isImageBig(e.target.result)
+            .then(res => {
+                // console.log(res);
+                setImg(e.target.result);
+            })
+            .catch(error => {
+                console.log("hi error: ", error);
+            })
+            
         }
 
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+        
+
 
     }
 
     return (
-        <>
+        <div className="bg-white p-6 p-t-8">
             <div className="mb-6">
                 <h2 className="font-bold text-2xl text-dark mb-2">Profile Details</h2>
                 <p className="text-grey-1">Add your details to create a personal touch to your profile.</p>
             </div>
 
-            <form onSubmit={uploadImage}>
-                <div className="bg-grey-2 p-4 rounded-md mb-5">
+            <form>
+                <div className="bg-grey-3 p-4 rounded-md mb-5">
                     <label className="block text-md mb-3 text-grey-1 font-thin">Profile picture</label>
                     <div className="relative rounded-2xl group-hover/item:visible w-48 h-48 bg-violet-3 flex justify-center items-center flex-col ">
                         <input onChange={onChange} className="w-full h-full absolute inset-x-0 opacity-0 z-30 cursor-pointer bg-grey-2" ref={ref} type="file" id="profilePic" name="profilePic" accept="image/png, image/jpeg" />
@@ -72,20 +67,22 @@ export default function Profile({avatar, img, setImg, input, setUploadInput, set
                         </div>
                         }
                     </div>
-                    <p className="text-grey-1 text-xs mt-2 font-thin">Image must be below 1024x1024px. Use PNG or JPG format.</p>
+                    <p className="text-grey-1 text-xs font-thin mt-8">Image must be below 1024x1024px. Use PNG or JPG format.</p>
                 </div>
 
-                <div className="bg-grey-2 p-4 rounded-md">
+                <div className="bg-grey-3 p-4 rounded-md">
                     <label className="block text-xs font-thin mb-1">First name*</label>
-                    <input type="text" className="p-2 rounded-lg mb-3" onChange={(e) => setFirstName(e.target.value)} />
+                    <input type="text"
+                            className="input p-2 rounded-lg mb-3"
+                            onChange={(e) => setFirstName(e.target.value)} />
 
                     <label className="block text-xs font-thin mb-1"  >Last name*</label>
-                    <input type="text" className="p-2 rounded-lg mb-3"
-                    onChange={(e) => setLastName(e.target.value)}
+                    <input type="text" className="input p-2 rounded-lg mb-3"
+                            onChange={(e) => setLastName(e.target.value)}
                     />
 
                     <label className="block text-xs font-thin mb-1">Email</label>
-                    <input type="text" className="p-2 rounded-lg" 
+                    <input type="text" className="input p-2 rounded-lg" 
                     onChange={(e) => setEmail2(e.target.value)}
                     />
                 </div>
@@ -93,6 +90,6 @@ export default function Profile({avatar, img, setImg, input, setUploadInput, set
 
 
             {/* <img src={img}/> */}
-        </>
+        </div>
     )
 }

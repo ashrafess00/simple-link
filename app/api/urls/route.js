@@ -17,9 +17,11 @@ export async function POST(req) {
         const user = await User.findById(userId);
         if (user) {
 
-            urlsToBeAdded.map(url => {
-                user.userUrls.push(url);
-            })
+            // urlsToBeAdded.map(url => {
+            //     user.userUrls.push(url);
+            // })
+
+            user.userUrls = urlsToBeAdded;
             const result = await user.save();
             
             //new jwt with new data

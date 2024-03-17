@@ -1,15 +1,16 @@
 import dbConnect from "@/app/lib/dbConnect";
 import User from "@/app/models/User";
 import { NextResponse } from "next/server";
+
 export async function GET(req, {params}) {
     const {client, bucket } = await dbConnect();
     const {data} = params;
     
     try {
+        console.log("data: ", data);
         const files = await bucket.find({filename: data}).toArray();
         const file = files[0];
 
-        console.log(files);
         const stream = bucket.openDownloadStreamByName(file.filename);
 
         return new NextResponse(stream, {

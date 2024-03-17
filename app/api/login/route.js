@@ -26,7 +26,7 @@ export async function POST(req) {
                     value: token,
                     
                     path: '/',
-                })
+                });
 
                 return Response.json({message: "Login Successful",  token})
             }

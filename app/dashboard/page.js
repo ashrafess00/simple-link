@@ -10,6 +10,7 @@ import { addUrls, deleteUrls, editUrls } from "../lib/manageUrlsCalls";
 // import { singToken } from "../lib/verifyToken";
 import Cookies from 'js-cookie';
 import { listMenu } from "../utils/listMenu";
+import Navbar from "../ui/Navbar";
 
 
 export default function page() {
@@ -46,53 +47,42 @@ export default function page() {
 
 
 
+
+
+
     async function saveData(e) {
-
-        //
         if (tab) {
-            const addedUrls = urls.filter(e => e.status === "added");
-            const editedUrls = urls.filter(e => (e.status === "edited" && e._id));
-            const deletedUrls = urls.filter(e => (e.status === "deleted" && e._id));
-
             try {
-                await addUrls(addedUrls);
-                await editUrls(editedUrls);
-                await deleteUrls(deletedUrls);
-                
-
-                // await singToken();
+                await addUrls(urls);
             }
             catch(error) {
                 console.log(error);
             }
-
-
         }
         //we are on profile
         else {
-            const input = uploadInput.current;
-            const formData = new FormData();
+            // const input = uploadInput.current;
+            // const formData = new FormData();
 
+            // if (input.files) {
+            //     const imgName = input.files[0].name;
+            //     const img = input.files[0];
+            //     formData.append(imgName, img);
 
-            // console.log(input);
-            if (input.files) {
-                const imgName = input.files[0].name;
-                const img = input.files[0];
-                formData.append(imgName, img);
-
-                try {
-                    const res = await fetch("/api/uploadImg", {
-                        method: 'POST',
-                        body: formData
-                    });
+            //     try {
+            //         const res = await fetch("/api/uploadImg", {
+            //             method: 'POST',
+            //             body: formData
+            //         });
     
-                    if (!res.ok)
-                        throw new Error("images wasn't uploaded");
-                }
-                catch(error) {
-                    console.log(error);
-                }
-            }
+            //         if (!res.ok)
+            //             throw new Error("images wasn't uploaded");
+            //     }
+            //     catch(error) {
+            //         console.log(error);
+            //     }
+            // }
+            console.log(firstName, lastName, email2);
         }
     }
 
@@ -101,23 +91,14 @@ export default function page() {
 
     return (
         <>
-        <nav className="flex justify-between">
-            <div>logo</div>
-            <div className="flex">
-                <div onClick={() => setTab(true)}>icon1</div>
-                <div onClick={() => setTab(false)}>icon2</div>
-            </div>
-            
-            <div>view</div>
-        </nav>
+
+        <Navbar tab={tab} setTab={setTab} />
 
 
-        <main className="bg-grey-3 lg:flex">
-            <div className="hidden lg:block">
-                <Phone />
-            </div>
+        <main className="max-h-[70rem] lg:flex justify-start gap-4 max-w-screen-2xl mx-auto relative">
+            <Phone urls={urls} avatar={avatar}/>
 
-            <div className="p-4 bg-grey-3 text-grey-1">
+            <div className="flex flex-col lg:w-2/3  bg-grey-3 text-grey-1 w-full">
             {tab ?
             <CustomizeUrls 
                 urls={urls}
@@ -137,12 +118,12 @@ export default function page() {
                 
                 />
             }
+        <section className="mt-auto md:text-end sticky bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
+            <button onClick={saveData} className="w-full lg:w-fit btn-primary">Save</button>
+        </section>
             </div>
         </main>
 
-        <section className="sticky bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
-            <button onClick={saveData} className="w-full btn-primary">Save</button>
-        </section>
         </>
     )
 }
