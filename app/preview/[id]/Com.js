@@ -6,7 +6,6 @@ export default function Ji() {
 
     function shareLink() {
         navigator.clipboard.writeText(window.location.href);
-        console.log("copied");
     }
 
     return (

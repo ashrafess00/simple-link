@@ -48,7 +48,7 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
     const deleteUrl = (index) => (e) => {
 
-        console.log(index);
+
         setUrls(purl => {
             let updatedUrls = [...purl];
             updatedUrls.splice(index, 1);
@@ -62,61 +62,59 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
 
        
     return (
-        <div className='z-50 overflow-auto bg-white rounded-md p-6 p-t-8 max-w-screen-2xl'>
-        <h2 className='mt-10 text-2xl font-bold mb-2 text-dark'>Customize your links</h2>
-        <p className='text-grey-1 mb-10'>Add/edit/remove links below and then share all your profiles with the world!</p>
+        <div className='z-50 h-full overflow-auto bg-white rounded-md p-6 p-t-8 max-w-screen-2xl'>
+            <h2 className='mt-10 text-2xl font-bold mb-2 text-dark'>Customize your links</h2>
+            <p className='text-grey-1 mb-10'>Add/edit/remove links below and then share all your profiles with the world!</p>
 
-        <button
-        className="btn-secondary w-full mb-4"
-        onClick={addNewLink}
-        >
-        +Add new link
-        </button>
+            <button
+                className="btn-secondary w-full mb-4"
+                onClick={addNewLink}
+            >
+                +Add new link
+            </button>
 
+            {
+                (urls.length == 0)
+                ? <GetStarted />
+                : 
+                urls.map((url, key) => {
+                    return (
+                        <div className="p-6 mb-6 border-dark cursor-pointer bg-grey-3"
+                            key={key}>
 
-
-        {
-            (urls.length == 0)
-            ? <GetStarted />
-            : 
-            urls.map((url, key) => {
-                return (
-                    <div className="p-6 mb-6 border-dark cursor-pointer bg-grey-3"
-                        key={key}>
-
-                        <div className='flex justify-between mb-4'>
-                            <p className='font-bold'>Link #{key + 1}</p>
-                            <div onClick={deleteUrl(key)} className='hover:text-violet-1'>Remove</div>
+                            <div className='flex justify-between mb-4'>
+                                <p className='font-bold'>Link #{key + 1}</p>
+                                <div onClick={deleteUrl(key)} className='hover:text-violet-1'>Remove</div>
+                            </div>
+                            <label className='block mb-2'>Platform</label>
+                            <Select
+                                value={{label: url.name, value: url.name}}
+                                options={options}
+                                isSearchable={false}
+                                onChange={changeUrlVal(key)}
+                                name="listMenu"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        cursor: 'pointer',
+                                        marginBottom: '1rem'
+                                    }),
+                                }}
+                            />
+                            <label className='block mb-2'>Link</label>
+                            <div className='relative'>
+                                <input
+                                type="text"
+                                placeholder="e.g. https://www.github.com/johnappleseed"
+                                className="input w-full"
+                                value={url.url}
+                                onChange={changeUrlVal(key)}/>
+                                {/* <img className='absolute inset-y-0 left-0' src='/images/icons/icon-links-header.svg' /> */}
+                            </div>                        
                         </div>
-                        <label className='block mb-2'>Platform</label>
-                        <Select
-                            value={{label: url.name, value: url.name}}
-                            options={options}
-                            isSearchable={false}
-                            onChange={changeUrlVal(key)}
-                            name="listMenu"
-                            styles={{
-                                control: (baseStyles, state) => ({
-                                    ...baseStyles,
-                                    cursor: 'pointer',
-                                    marginBottom: '1rem'
-                                }),
-                            }}
-                        />
-                        <label className='block mb-2'>Link</label>
-                        <div className='relative'>
-                            <input
-                            type="text"
-                            placeholder="e.g. https://www.github.com/johnappleseed"
-                            className="input w-full"
-                            value={url.url}
-                            onChange={changeUrlVal(key)}/>
-                            {/* <img className='absolute inset-y-0 left-0' src='/images/icons/icon-links-header.svg' /> */}
-                        </div>                        
-                    </div>
-                )
-        })
-        }
+                    )
+                 })
+            }
         </div>
     )
 }

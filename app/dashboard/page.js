@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import CustomizeUrls from './CustomizeUrls';
 import Profile from "./Profile";
 import Phone from "../ui/Phone";
-import { addUrls, deleteUrls, editUrls } from "../lib/manageUrlsCalls";
+import { addUrls, deleteUrls, editUrls, saveAvatar, saveUserProfile } from "../lib/manageUrlsCalls";
 // import { singToken } from "../lib/verifyToken";
 import Cookies from 'js-cookie';
 import { listMenu } from "../utils/listMenu";
@@ -25,7 +25,16 @@ export default function page() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email2, setEmail2] = useState("");
+
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+    const [email2Error, setEmail2Error] = useState(false);
+
     const [options, setOptions] = useState(listMenu);
+    const [userId, setUserId] = useState("");
+
+    const [saved, setSaved] = useState(false);
+    const [savedError, setSavedError] = useState(false);
 
     useEffect(() => {
         fetch ("/api/users")
@@ -38,10 +47,15 @@ export default function page() {
         {
             setUrls(data.userUrls);
             setAvatar(data.avatar);
+            setFirstName(data.firstName);
+            setLastName(data.lastName);
+            setEmail2(data.email2);
+            setUserId(data.userId);
+
         }
         })
         .catch(error => {
-            console.log('lerrorat')
+
         })
     }, []);
 
@@ -54,35 +68,40 @@ export default function page() {
         if (tab) {
             try {
                 await addUrls(urls);
+                setSaved(true);
+                setTimeout(() => {
+                    setSaved(false);
+                }, 2000);
             }
             catch(error) {
-                console.log(error);
+                setSavedError(true);
+                setTimeout(() => {
+                    setSavedError(false);
+                }, 2000);
             }
         }
         //we are on profile
         else {
-            // const input = uploadInput.current;
-            // const formData = new FormData();
+            if (firstName === "")
+                return setFirstNameError(true);
+            if (lastName === "")
+                return setLastNameError(true);
 
-            // if (input.files) {
-            //     const imgName = input.files[0].name;
-            //     const img = input.files[0];
-            //     formData.append(imgName, img);
-
-            //     try {
-            //         const res = await fetch("/api/uploadImg", {
-            //             method: 'POST',
-            //             body: formData
-            //         });
-    
-            //         if (!res.ok)
-            //             throw new Error("images wasn't uploaded");
-            //     }
-            //     catch(error) {
-            //         console.log(error);
-            //     }
-            // }
-            console.log(firstName, lastName, email2);
+            try {
+                await saveUserProfile([firstName, lastName, email2]);
+                await saveAvatar(uploadInput);
+                setSaved(true);
+                setTimeout(() => {
+                    setSaved(false);
+                }, 2000);
+            }
+            catch(error) {
+                setSavedError(true);
+                setTimeout(() => {
+                    setSavedError(false);
+                }, 2000);
+            }
+            
         }
     }
 
@@ -90,15 +109,23 @@ export default function page() {
     
 
     return (
-        <>
+        <div className="p-4 ">
 
-        <Navbar tab={tab} setTab={setTab} />
+        <Navbar tab={tab} setTab={setTab} userId={userId} />
 
 
-        <main className="max-h-[70rem] lg:flex justify-start gap-4 max-w-screen-2xl mx-auto relative">
-            <Phone urls={urls} avatar={avatar}/>
+        <main className="relative py-4 lg:min-h-[90vh] lg:max-h-[90vh] overflow-auto lg:flex justify-start gap-4 max-w-screen-2xl mx-auto">
+            <Phone 
+                    urls={urls}
+                    avatar={avatar}
+                    firstName={firstName}
+                    lastName={lastName}
+                    email2={email2}
+                    img={img}
+                    setImg={setImg}
+                    />
 
-            <div className="flex flex-col lg:w-2/3  bg-grey-3 text-grey-1 w-full">
+            <div className="max-h-full overflow-auto flex flex-col lg:w-2/3  bg-grey-3  text-grey-1 w-full">
             {tab ?
             <CustomizeUrls 
                 urls={urls}
@@ -115,15 +142,24 @@ export default function page() {
                 setFirstName={setFirstName}
                 setLastName={setLastName}
                 setEmail2={setEmail2}
-                
+                firstName={firstName}
+                lastName={lastName}
+                email2={email2}
                 />
             }
-        <section className="mt-auto md:text-end sticky bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
+        <section className="lg:flex lg:flex-row-reverse justify-between items-center mt-auto lg:text-end bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
             <button onClick={saveData} className="w-full lg:w-fit btn-primary">Save</button>
+            {
+                saved 
+                ? <p className="text-[green]">saved successfully !!!</p>
+                : savedError
+                ? <p className="text-red text-sm font-thin">couldn't save your data, please try again!!!</p>
+                : <div></div>
+            }
         </section>
             </div>
         </main>
 
-        </>
+        </div>
     )
 }

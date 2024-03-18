@@ -7,6 +7,9 @@ export async function singToken(user) {
             userEmail: user.email,
             userUrls: user.userUrls,
             avatar: user.avatar,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email2: user.email2,
         })
         .setProtectedHeader({alg: 'HS256'})
         .setIssuedAt()
@@ -27,6 +30,6 @@ export default async function verifyToken(token) {
         return payload;
     }
     else {
-        throw new Error ("invalid token");
+        throw new Error("invalid token");
     }
 }

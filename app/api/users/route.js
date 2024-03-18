@@ -13,14 +13,14 @@ export async function GET(req) {
         const data = await verifyToken(jwt);
         // const user = await User.findById(userId);
 
-        console.log(data)
+
         if (data) {
             return Response.json(data);
         }
         return Response.json({error: "error"});
     }
     catch(error) {
-        console.log(error);
+
         return Response.json({success: error}, {status: 400});
     }
 }

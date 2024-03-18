@@ -26,13 +26,13 @@ export default function page() {
         if (password === "")
             return setPasswordError("Can't be empty");
 
+        setLoading(true);
         fetch("/api/login", {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({email, password})
         })
         .then(res => {
-            setLoading(true);
             if (!res.ok)
                 throw new Error("there is an error");
             

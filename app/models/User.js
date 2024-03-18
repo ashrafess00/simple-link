@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
     avatar: { type: String },
     firstName: String,
     lastName: String,
+    email2: String,
 })
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

@@ -25,12 +25,15 @@ export async function POST(req) {
     const user = await User.findById(userId);
     if (user) {
         try {
-            const {firstName, lastName} = await req.json();
+            const {firstName, lastName, email2} = await req.json();
             if (!firstName || !lastName)
                 return Response.json({message: 'please include firstName and lastName'}, {status: 400})
             user.firstName = firstName;
             user.lastName = lastName;
+            if (email2)
+                user.email2 = email2;
             const result = await user.save();
+            await saveNewTokenToCookie(user);
             return Response.json({message: 'first name and last name saved', result}, {status: 201});
 
             // return Response.json({user})

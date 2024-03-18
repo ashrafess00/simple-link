@@ -7,7 +7,7 @@ export async function GET(req, {params}) {
     const {data} = params;
     
     try {
-        console.log("data: ", data);
+
         const files = await bucket.find({filename: data}).toArray();
         const file = files[0];
 

@@ -11,12 +11,15 @@ export async function middleware(req) {
         await verifyToken(value);
         if (req.nextUrl.pathname == '/login')
             return Response.redirect(new URL('/dashboard', req.url));
+        if (req.nextUrl.pathname == '/register')
+            return Response.redirect(new URL('/dashboard', req.url));
     }
     catch(error) {
+
         return Response.redirect(new URL('/login', req.url));
     }
 }
 
 export const config = {
-    matcher: ['/dashboard', '/preview']
+    matcher: ['/dashboard', '/preview',]
 }

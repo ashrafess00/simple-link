@@ -20,17 +20,14 @@ export async function POST(req) {
     let name;
     let image;
 
-    console.log(user);
-
     
     if (user) {
         const data = await req.formData();
-        const userInfo = await req.json();
         try {
             for (const entry of Array.from(data.entries())) {
                 const [key, value] = entry;
     
-                console.log(key);
+
                 const isFile = typeof value === "object";
     
                 if (isFile) {
@@ -59,14 +56,13 @@ export async function POST(req) {
                 const files = await bucket.find({filename: user.avatar})
                 .toArray()
     
-                // console.log(files);
                     if (files.length > 0) {
                         const file = files[0];
                         bucket.delete(file._id);
                     }
                 }
                 catch (error) {
-                    console.log("there is an error");
+
                 }
             }
 

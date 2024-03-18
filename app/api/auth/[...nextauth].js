@@ -12,7 +12,7 @@ const handler = NextAuth({
           async authorize(credentials) {
             const user = {id: 1, name: 'ashraf'};
             if (user) {
-                console.log(user);
+
               return { user }
             } else {
               throw new Error('Invalid credentials')
