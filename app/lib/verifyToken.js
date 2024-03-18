@@ -27,6 +27,7 @@ export default async function verifyToken(token) {
         const { payload } = await jwtVerify(token,
             new TextEncoder().encode(process.env.JWT_SECRET_KEY)
         );
+        console.log(payload);
         return payload;
     }
     else {

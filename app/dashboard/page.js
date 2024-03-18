@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 
 import CustomizeUrls from './CustomizeUrls';
 import Profile from "./Profile";
 import Phone from "../ui/Phone";
-import { addUrls, deleteUrls, editUrls, saveAvatar, saveUserProfile } from "../lib/manageUrlsCalls";
-// import { singToken } from "../lib/verifyToken";
-import Cookies from 'js-cookie';
+import { addUrls, saveAvatar, saveUserProfile } from "../lib/manageUrlsCalls";
 import { listMenu } from "../utils/listMenu";
 import Navbar from "../ui/Navbar";
+import { logOut, verifyAndGetUserData } from "../actions";
 
 
 export default function page() {
 
-    const [userData, setUserData] = useState({});
     const [avatar, setAvatar] = useState();
     const [urls, setUrls] = useState([]);
     const [tab, setTab] = useState(true);
@@ -28,7 +26,6 @@ export default function page() {
 
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
-    const [email2Error, setEmail2Error] = useState(false);
 
     const [options, setOptions] = useState(listMenu);
     const [userId, setUserId] = useState("");
@@ -36,31 +33,32 @@ export default function page() {
     const [saved, setSaved] = useState(false);
     const [savedError, setSavedError] = useState(false);
 
+    const [linksError, setLinksError] = useState([false]);
+
     useEffect(() => {
-        fetch ("/api/users")
-        .then(res => {
-            if (!res.ok)
-                throw new Error('there is an error');
-            return res.json();
+        verifyAndGetUserData()
+        .then(userData => {
+            setUrls(userData.userUrls);
+            setAvatar(userData.avatar);
+            setFirstName(userData.firstName);
+            setLastName(userData.lastName);
+            setEmail2(userData.email2);
+            setUserId(userData.userId);
         })
-        .then(data => {
-        {
-            setUrls(data.userUrls);
-            setAvatar(data.avatar);
-            setFirstName(data.firstName);
-            setLastName(data.lastName);
-            setEmail2(data.email2);
-            setUserId(data.userId);
-
-        }
-        })
-        .catch(error => {
-
+        .catch((error) => {
+            logOut();
         })
     }, []);
 
 
 
+    function linksAreValid() {
+        const res = linksError.filter(e => e == true);
+        if (res.length == 0)
+            return false;
+        else
+            return true;
+    }
 
 
 
@@ -132,6 +130,8 @@ export default function page() {
                 setUrls={setUrls}
                 options={options}
                 setOptions={setOptions}
+                linksError={linksError}
+                setLinksError={setLinksError}
             />
             : <Profile
                 avatar={avatar}
@@ -145,10 +145,14 @@ export default function page() {
                 firstName={firstName}
                 lastName={lastName}
                 email2={email2}
+                firstNameError={firstNameError}
+                lastNameError={lastNameError}
+                setFirstNameError={setFirstNameError}
+                setLastNameError={setLastNameError}
                 />
             }
         <section className="lg:flex lg:flex-row-reverse justify-between items-center mt-auto lg:text-end bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
-            <button onClick={saveData} className="w-full lg:w-fit btn-primary">Save</button>
+            <button onClick={saveData} className={`w-full lg:w-fit btn-primary ${linksAreValid() && "btn-disabled"}`}>Save</button>
             {
                 saved 
                 ? <p className="text-[green]">saved successfully !!!</p>

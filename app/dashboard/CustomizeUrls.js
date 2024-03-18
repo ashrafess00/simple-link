@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { list } from 'postcss';
 import GetStarted from '../ui/GetStarted';
 
-export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
+export default function CustomizeUrls({urls, setUrls, options, setOptions, linksError, setLinksError}) {
     // const [opts, setOpts] = useState(listMenu);
     
     useEffect(() => {
@@ -31,7 +31,9 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
     }
 
     const changeUrlVal = (index) => (e) => {
+        const urlRegex = /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
         const {value, target} = e;
+
         setUrls(pUrls => {
             const updatedUrls = [...pUrls];
 
@@ -41,9 +43,26 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
             else 
                 updatedUrls[index] = {...updatedUrls[index], url: target.value};
 
+            
+            setLinksError(p => {
+                const v = value || target.value;
+                const linkos = [...p];
+                
+                console.log(v)
+                if (urlRegex.test(v))
+                    linkos[index] = false;
+                else
+                    linkos[index] = true;
+
+                return linkos
+            });
+
+
             return updatedUrls;
         })
     }
+
+    console.log(linksError);
 
 
     const deleteUrl = (index) => (e) => {
@@ -106,10 +125,10 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions}) {
                                 <input
                                 type="text"
                                 placeholder="e.g. https://www.github.com/johnappleseed"
-                                className="input w-full"
+                                className={`input w-full ${linksError[key] && "input-error"} `}
                                 value={url.url}
                                 onChange={changeUrlVal(key)}/>
-                                {/* <img className='absolute inset-y-0 left-0' src='/images/icons/icon-links-header.svg' /> */}
+                                {linksError[key] && <span className="text-sm font-thin text-red absolute right-4 inset-y-0 text-center flex items-center">not a valid url</span>}
                             </div>                        
                         </div>
                     )

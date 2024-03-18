@@ -52,7 +52,7 @@ export default async function page({params}) {
                         userUrls.map((e, index) => {
                             const {style, logo} = getUrlCom(e.name);
                             return (
-                                <a href={e.url} className="w-full">
+                                <a href={e.url} target="_blank" className="w-full">
                                     <RecSvg style={style} url={e.name} logo={logo} />
                                 </a>
                             )

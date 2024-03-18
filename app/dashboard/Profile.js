@@ -11,7 +11,15 @@ export default function Profile({avatar,
     email2,
     setFirstName,
     setLastName,
-    setEmail2}) {
+    setEmail2,
+    firstNameError,
+    lastNameError,
+    setFirstNameError,
+    setLastNameError,
+
+}) {
+
+    const [imgError, setImgError] = useState(false);
 
     useEffect(() => {
         if (avatar) {
@@ -41,8 +49,9 @@ export default function Profile({avatar,
             .catch(error => {
             })
         }
-
     }
+
+ 
 
     return (
         <div className="bg-white p-6 p-t-8 h-full">
@@ -53,10 +62,10 @@ export default function Profile({avatar,
 
             <div className="p-8 gap-2 bg-grey-3 rounded-md mb-5 md:flex items-center  border-violet-3">
 
-                <div className=" border-red md:flex w-full items-center">
+                <div className=" md:flex w-full items-center">
                     <label className="block text-md mb-3 text-grey-1 font-thin  md:w-[40%]">Profile picture</label>
                 
-                    <div className="w-48 h-48 flex-grow-0 flex-shrink-0  group/item relative rounded-2xl bg-violet-3 flex justify-center items-center flex-col ">
+                    <div className=" w-48 h-48 flex-grow-0 flex-shrink-0  group/item relative rounded-2xl bg-violet-3 flex justify-center items-center flex-col ">
 
                     <input onChange={onChange} className="w-full h-full absolute inset-x-0 opacity-0 z-30 cursor-pointer bg-grey-2" ref={ref} type="file" id="profilePic" name="profilePic" accept="image/png, image/jpeg" />
                     
@@ -82,18 +91,25 @@ export default function Profile({avatar,
 
                 <div className="bg-grey-3  rounded-md p-8  ">
                     <div className="md:flex items-center gap-2">
-                        <label className=" block text-xs md:text-lg font-thin mb-1 md:w-[40%]">First name*</label>
+                        <label className="block text-xs md:text-lg font-thin mb-1 md:w-[40%]">First name*</label>
                         <input type="text"
-                                className="input p-2 rounded-lg mb-3 w-full md:w-[60%] ml-auto"
-                                onChange={(e) => setFirstName(e.target.value)}
+                                className={`input p-2 rounded-lg mb-3 w-full md:w-[60%] ml-auto ${firstNameError && "input-error"}`}
+                                onChange={(e) => {
+                                    setFirstName(e.target.value)
+                                    setFirstNameError(false)
+                                }}
                                 value={firstName}
                                 />
                     </div>
 
                     <div className="md:flex items-center gap-2 ">
                         <label className="block text-xs md:text-lg font-thin mb-1 md:w-[40%]"  >Last name*</label>
-                        <input type="text" className="input p-2 rounded-lg mb-3 w-full md:w-[60%]"
-                                onChange={(e) => setLastName(e.target.value)}
+                        <input type="text"
+                                className={`input p-2 rounded-lg mb-3 w-full md:w-[60%] ml-auto ${lastNameError && "input-error"}`}
+                                onChange={(e) => {
+                                    setLastName(e.target.value)
+                                    setLastNameError(false)
+                                }}
                                 value={lastName}
                         />
                     </div>
@@ -107,9 +123,6 @@ export default function Profile({avatar,
                     </div>
                 </div>
             </form>
-
-
-            {/* <img src={img}/> */}
         </div>
     )
 }

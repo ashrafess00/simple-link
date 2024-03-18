@@ -1,13 +1,11 @@
 export const addUrls = async (urls) => {
-    // if (urls.length > 0) {
-        const res = await fetch("/api/urls", {
-            method: 'POST',
-            body: JSON.stringify(urls),
-            headers: {'Content-Type': 'application/json'}
-        })
-        if (!res.ok)
-            throw new Error("erooor");
-    // }
+    const res = await fetch("/api/urls", {
+        method: 'POST',
+        body: JSON.stringify(urls),
+        headers: {'Content-Type': 'application/json'}
+    })
+    if (!res.ok)
+        throw new Error("erooor");
 }
 
 export const saveUserProfile = async (userData) => {
