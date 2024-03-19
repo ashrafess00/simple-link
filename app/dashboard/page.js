@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-
 import CustomizeUrls from './CustomizeUrls';
 import Profile from "./Profile";
 import Phone from "../ui/Phone";

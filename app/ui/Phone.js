@@ -32,7 +32,7 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
                         : <div className="bg-grey-2 rounded-full w-full h-full animate-pulse"></div>
                     }
                 </div>
-                <div xmlns="http://www.w3.org/1999/xhtml" className="text-center mx-auto">
+                <div xmlns="http://www.w3.org/1999/xhtml" className="text-center mx-auto overflow-hidden">
                     {
                         (firstName !== "" || lastName !== "")
                         ? <div className="font-medium text-2xl">{firstName + " " + lastName}</div>
@@ -48,7 +48,6 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
 
             <foreignObject x="35" y="290" width="240" height="100%">
                 <div xmlns="http://www.w3.org/1999/xhtml" className="overflow-auto border-2h-[50%]">
-
                 {
                     urls.map((url, index) => {
                         if (index < 4) {
@@ -64,16 +63,6 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
                 </div>
             </foreignObject>
             </svg>
-        </div>
-    )
-}
-
-
-function RecSvg({style, url, logo}) {
-    return (
-        <div className={`${style}  mb-4 p-3 px-8 rounded-xl flex gap-4 items-center fill-white`}>
-            {logo}
-            {url.name}
         </div>
     )
 }

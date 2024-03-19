@@ -47,6 +47,10 @@ export default function Profile({avatar,
                 setImg(e.target.result);
             })
             .catch(error => {
+                setImgError(true);
+                setTimeout(() => {
+                    setImgError(false);
+                }, 2000)
             })
         }
     }
@@ -84,7 +88,12 @@ export default function Profile({avatar,
                     }
                     </div>
                 
-                <p className="text-grey-1 text-xs font-thin mt-8 md:ml-6">Image must be below 1024x1024px. Use PNG or JPG format.</p>
+                {
+                    imgError 
+                    ? <p className="text-red text-xs font-thin mt-8 md:ml-6">Image couldn&apos;t be uploaded! use a smalled image</p>
+                    : <p className="text-grey-1 text-xs font-thin mt-8 md:ml-6">Image must be below 1024x1024px. Use PNG or JPG format.</p>
+                }
+                
                 </div>
             </div>
             <form>
