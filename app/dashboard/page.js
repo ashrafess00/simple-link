@@ -12,27 +12,22 @@ import Navbar from "../ui/Navbar";
 import { logOut, verifyAndGetUserData } from "../actions";
 
 
-export default function page() {
+export default function Dashboard() {
 
     const [avatar, setAvatar] = useState();
     const [urls, setUrls] = useState([]);
     const [tab, setTab] = useState(true);
-
     const [img, setImg] = useState("");
     const [uploadInput, setUploadInput] = useState();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email2, setEmail2] = useState("");
-
     const [firstNameError, setFirstNameError] = useState(false);
     const [lastNameError, setLastNameError] = useState(false);
-
     const [options, setOptions] = useState(listMenu);
     const [userId, setUserId] = useState("");
-
     const [saved, setSaved] = useState(false);
     const [savedError, setSavedError] = useState(false);
-
     const [linksError, setLinksError] = useState([false]);
 
     useEffect(() => {
@@ -157,7 +152,7 @@ export default function page() {
                 saved 
                 ? <p className="text-[green]">saved successfully !!!</p>
                 : savedError
-                ? <p className="text-red text-sm font-thin">couldn't save your data, please try again!!!</p>
+                ? <p className="text-red text-sm font-thin">couldn&apos;t save your data, please try again!!!</p>
                 : <div></div>
             }
         </section>

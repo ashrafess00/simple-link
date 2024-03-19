@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { isImageBig } from "../lib/handleImageUpload";
+
 export default function Profile({avatar,
     img,
     setImg,
-    input,
     setUploadInput,
     firstName,
     lastName,

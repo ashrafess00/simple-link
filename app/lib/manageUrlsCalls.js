@@ -10,7 +10,6 @@ export const addUrls = async (urls) => {
 
 export const saveUserProfile = async (userData) => {
     const [ firstName, lastName, email2 ] = userData;
-    console.log(firstName, lastName, email2);
 
     const res = await fetch('/api/uploadUserInfo', {
         method: 'POST',

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 
 
-export default function page() {
+export default function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");

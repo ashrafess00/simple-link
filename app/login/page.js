@@ -5,9 +5,8 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getJwt } from "../lib/getJwt";
 
-export default function page() {
+export default function Login() {
 
 
     const [email, setEmail] = useState("");
@@ -101,7 +100,7 @@ export default function page() {
                 </form>
 
                 <div className="md:flex justify-center gap-1">
-                    <p className="text-center text-grey-1">Don't have an account?</p>
+                    <p className="text-center text-grey-1">Don&apos;t have an account?</p>
                     <Link className="text-center  text-violet-1 hover:text-violet-2 transition duration-2 block" href="/register">Create account</Link>
                 </div>
 

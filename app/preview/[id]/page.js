@@ -6,9 +6,10 @@ import User from "@/app/models/User";
 
 import Image from "next/image";
 import { cookies } from "next/headers";
+import UrlContainer from "@/app/ui/UrlContainer";
 
 
-export default async function page({params}) {
+export default async function Preview({params}) {
 
     await dbConnect();
 
@@ -52,8 +53,8 @@ export default async function page({params}) {
                         userUrls.map((e, index) => {
                             const {style, logo} = getUrlCom(e.name);
                             return (
-                                <a href={e.url} target="_blank" className="w-full">
-                                    <RecSvg style={style} url={e.name} logo={logo} />
+                                <a key={index} href={e.url} target="_blank" className="w-full">
+                                    <UrlContainer style={style} url={e.name} logo={logo} />
                                 </a>
                             )
                         })
@@ -68,14 +69,3 @@ export default async function page({params}) {
     )
 }
 
-
-
-
-function RecSvg({style, url, logo}) {
-    return (
-        <div className={`${style} w-full  mb-4 p-3 px-8 rounded-xl flex gap-4 items-center`}>
-            {logo}
-            {url}
-        </div>
-    )
-}

@@ -5,8 +5,6 @@ import { list } from 'postcss';
 import GetStarted from '../ui/GetStarted';
 
 export default function CustomizeUrls({urls, setUrls, options, setOptions, linksError, setLinksError}) {
-    // const [opts, setOpts] = useState(listMenu);
-    
     useEffect(() => {
         if (urls.length > 0) {
             const nameInArr2 = new Set(urls.map(obj => {
@@ -48,7 +46,6 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions, links
                 const v = value || target.value;
                 const linkos = [...p];
                 
-                console.log(v)
                 if (urlRegex.test(v))
                     linkos[index] = false;
                 else
@@ -62,7 +59,6 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions, links
         })
     }
 
-    console.log(linksError);
 
 
     const deleteUrl = (index) => (e) => {
