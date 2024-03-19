@@ -1,5 +1,5 @@
 import { getUrlCom, listMenu } from "@/app/utils/listMenu";
-import Ji from "./Com";
+import CanEdit from "../../ui/CanEdit";
 import dbConnect from "@/app/lib/dbConnect";
 import verifyToken from "@/app/lib/verifyToken";
 import User from "@/app/models/User";
@@ -34,7 +34,7 @@ export default async function Preview({params}) {
     return (
         <>
             <nav className="md:pt-8 md:px-8 md:relative md:block md:bg-violet-1 md:h-[25rem] md:w-full md:rounded-b-[3rem]">
-                {canEdit && <Ji />}
+                {canEdit && <CanEdit />}
 
                 <div className="shadow-xl md:p-20 bg-white rounded-lg mt-32 flex flex-col justify-center items-center p-8 max-w-md mx-auto">
 
