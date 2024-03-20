@@ -67,9 +67,9 @@ export default function Register() {
 
 
     return (
-        <div className="md:grid grid-cols-1 place-items-center h-full">
+        <div className="md:grid grid-cols-1 place-items-center h-full pt-10 md:pt-0">
             
-            <main className="p-10 rounded-lg max-w-screen-md w-full mx-auto">
+            <main className="md:p-10 rounded-lg max-w-screen-md w-full mx-auto">
                 <header className="mx-auto max-w-xs w-3/4 mb-10">
                     <Image src="images/logo-devlinks-large.svg"
                         width={500}
@@ -88,7 +88,7 @@ export default function Register() {
                         <div className="w-full relative mb-8">
                             <input placeholder="e.g.alex@email.com"
                                 type="text"
-                                className={`input w-full  ${emailError && "input-error"}`}
+                                className={`input-email input w-full  ${emailError && "input-error"}`}
                                 value={email}
                                 onChange={(e) => {
                                     setEmail(e.target.value)
@@ -104,7 +104,7 @@ export default function Register() {
                         <div className="w-full relative mb-8">
                             <input placeholder="Atleast .8 characters"
                                 type="password"
-                                className={`input w-full  ${passwordError && "input-error"}`}
+                                className={`input-password input w-full  ${passwordError && "input-error"}`}
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
@@ -121,7 +121,7 @@ export default function Register() {
                         <div className="w-full relative mb-8">
                             <input placeholder="At least .8 characters"
                                 type="password"
-                                className={`input w-full  ${confirmPasswordError && "input-error"}`}
+                                className={`input-password input w-full  ${confirmPasswordError && "input-error"}`}
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />

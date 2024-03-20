@@ -17,17 +17,17 @@ export default function CanEdit() {
 
     return (
         <>
-            <ul className="flex justify-between p-4 md:mt-4 bg-white mt-8 rounded-lg">
-                <Link href="/dashboard" className="btn-secondary block">
+            <ul className="flex flex-1 justify-around gap-4 md:mt-4 bg-white mt-8 rounded-lg text-center md:justify-between p-4">
+                <Link href="/dashboard" className="btn-secondary block ml-4 flex-1 p-2 max-w-32">
                     Back to Editor
                 </Link>
-                <button onClick={shareLink} href="/dashboard" className="btn-primary block">
+                <button onClick={shareLink} href="/dashboard" className="btn-primary  block mr-4 text-xs flex-1 p-2 max-w-32">
                     Share Link
                 </button>
             </ul>
             {
                 linkCopied &&
-                <p className="absolute rounded-full opacity-80 -translate-x-2/4 left-2/4 bottom-4 bg-dark text-white py-2 px-4">The link has been copied to your clipboard!</p>
+                <p className="absolute w-full w-fit rounded-full opacity-80 -translate-x-2/4 left-2/4 bottom-4 bg-dark text-white py-2 px-4">The link has been copied to your clipboard!</p>
             }
         </>
     )

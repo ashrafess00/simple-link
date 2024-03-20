@@ -6,8 +6,10 @@ body {
     height: 100vh !important;
 }
 
-@layer components {
 
+
+@layer components {
+    
     
     /* buttons  */
     .btn-primary {
@@ -45,6 +47,15 @@ body {
     }
 
 
+    .input-email {
+        background: url("/images/icons/icon-email.svg") no-repeat ;
+        background-position: 0.5rem center;
+    }
+    .input-password {
+        background: url("/images/icons/icon-password.svg") no-repeat ;
+        background-position: 0.5rem center;
+    }
+
     /* inputs */
     .input {
         color: theme('colors.dark');
@@ -52,6 +63,7 @@ body {
         border-radius: theme('borderRadius.md');
         padding: 0.5rem 1rem;
         outline: none;
+        padding-left: 30px;
     }
     .input-error {
         color: theme('colors.red');
