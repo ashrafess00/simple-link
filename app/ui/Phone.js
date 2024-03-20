@@ -16,7 +16,7 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
 
     return (
 
-        <div className="lg:flex justify-center items-center hidden bg-white  w-1/3  p-16">
+        <div className="lg:flex w-full justify-center items-center hidden bg-white  w-1/3  p-16">
 
 
             <svg overflow="auto" xmlns="http://www.w3.org/2000/svg" width="308" height="632" fill="none" viewBox="0 0 308 632">

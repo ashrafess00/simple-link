@@ -106,7 +106,7 @@ export default function Dashboard() {
         <Navbar tab={tab} setTab={setTab} userId={userId} />
 
 
-        <main className="relative py-4 lg:min-h-[90vh] lg:max-h-[90vh] overflow-auto lg:flex justify-start gap-4 max-w-screen-2xl mx-auto">
+        <main className="relative py-4 lg:min-h-[90vh]  overflow-auto lg:grid grid-cols-3 justify-start gap-4 max-w-screen-2xl mx-auto">
             <Phone 
                     urls={urls}
                     avatar={avatar}
@@ -117,7 +117,7 @@ export default function Dashboard() {
                     setImg={setImg}
                     />
 
-            <div className="max-h-full overflow-auto flex flex-col lg:w-2/3  bg-grey-3  text-grey-1 w-full">
+            <div className="w-full max-h-full overflow-auto flex flex-col col-span-2   bg-grey-3  text-grey-1 ">
             {tab ?
             <CustomizeUrls 
                 urls={urls}

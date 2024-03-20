@@ -58,7 +58,7 @@ export default function Profile({avatar,
  
 
     return (
-        <div className="bg-white p-6 p-t-8 h-full">
+        <div className="bg-white p-6 p-t-8 w-full h-full">
             <div className="mb-6">
                 <h2 className="font-bold text-2xl text-dark mb-2">Profile Details</h2>
                 <p className="text-grey-1">Add your details to create a personal touch to your profile.</p>

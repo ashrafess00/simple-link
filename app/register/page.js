@@ -19,6 +19,7 @@ export default function Register() {
     const router = useRouter();
 
     function submitForm(e) {
+        setLoading(true);
         e.preventDefault();
         if (email === "")
             return setEmailError("Can't be empty");
@@ -37,7 +38,7 @@ export default function Register() {
             body: JSON.stringify({email, password})
         })
         .then(async res => {
-            setLoading(true);
+            
             if (!res.ok)
             {
                 const {message} = await res.json();
@@ -66,9 +67,9 @@ export default function Register() {
 
 
     return (
-        <div className="border-2 md:grid grid-cols-1 place-items-center h-full">
+        <div className="md:grid grid-cols-1 place-items-center h-full">
             
-            <main className="p-10 rounded-lg max-w-screen-md w-full mx-auto border-2">
+            <main className="p-10 rounded-lg max-w-screen-md w-full mx-auto">
                 <header className="mx-auto max-w-xs w-3/4 mb-10">
                     <Image src="images/logo-devlinks-large.svg"
                         width={500}
@@ -130,7 +131,7 @@ export default function Register() {
 
                         <input type="submit"
                             value={loading ? "please wait ..." : "Create new account"}
-                            className={` btn-primary my-6 ${loading && 'btn-disabled'}`}/>
+                            className={`btn-primary my-6 ${loading && 'btn-disabled'}`}/>
                     </form>
 
                     <div className="md:flex justify-center gap-1">

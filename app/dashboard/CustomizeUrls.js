@@ -43,15 +43,17 @@ export default function CustomizeUrls({urls, setUrls, options, setOptions, links
 
             
             setLinksError(p => {
-                const v = value || target.value;
+                // const v = value || target.value;
                 const linkos = [...p];
                 
-                if (urlRegex.test(v))
-                    linkos[index] = false;
-                else
-                    linkos[index] = true;
+                if (target && target.value) {
+                    if (urlRegex.test(target.value))
+                        linkos[index] = false;
+                    else
+                        linkos[index] = true;
+                }
 
-                return linkos
+                return linkos;
             });
 
 

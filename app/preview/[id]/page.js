@@ -19,9 +19,9 @@ export default async function Preview({params}) {
     if (user) {
         userUrls = user.userUrls;
         avatar = user.avatar;
-        firstName = user.firstName;
-        lastName = user.lastName;
-        email2 = user.email2;
+        firstName = user.firstName || "";
+        lastName = user.lastName || "";
+        email2 = user.email2 || "";
     }
 
 
@@ -38,16 +38,22 @@ export default async function Preview({params}) {
 
                 <div className="shadow-xl md:p-20 bg-white rounded-lg mt-32 flex flex-col justify-center items-center p-8 max-w-md mx-auto">
 
-                    <Image alt="avatar" className="mb-2 border-violet-1 border-8 rounded-full w-32 h-32" src={"/api/" + avatar} width={250} height={250} />
-                    <h3 className="text-2xl font-bold">
+                    {avatar
+                    ? <Image alt="avatar" className="mb-2 border-violet-1 border-8 rounded-full w-32 h-32" src={"/api/" + avatar} width={250} height={250} />
+                    : <div className="w-32 h-32 animate-pulse bg-grey-2 rounded-full"></div>
+                    }
+                    <h3 className="text-2xl font-bold w-full text-center">
                     {
                         (firstName !== "" && lastName !== "")
                         ? firstName + " " + lastName
-                        : ""
+                        : <span className="rounded-full h-[0.9rem] mt-2 mb-4 w-3/4 mx-auto animate-pulse bg-grey-2 block"></span>
                     }
                     </h3>
-                    <h4 className="mb-8">
-                        {email2 !== "" ? email2 : ""}
+                    <h4 className="mb-8 w-full text-center">
+                        {email2 !== ""
+                        ? email2
+                        : <span className="rounded-full h-[0.9rem] w-1/2 mx-auto animate-pulse bg-grey-2 block"></span>
+                        }
                     </h4>
                     {
                         userUrls.map((e, index) => {

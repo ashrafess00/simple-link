@@ -30,7 +30,7 @@ export const listMenu = [
                 {logos[1]}
                 <span>Frontend Mentor</span>
             </div>,
-        style: 'bg-white text-dark border-2',
+        style: 'bg-white text-dark border-2 fill-dark',
         logo: logos[1]
 
     },
