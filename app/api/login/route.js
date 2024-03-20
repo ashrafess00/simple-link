@@ -1,12 +1,15 @@
 import dbConnect from "@/app/lib/dbConnect";
 import User from "@/app/models/User";
 import bcrypt from 'bcrypt';
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
-import { SignJWT } from "jose";
 import {singToken} from "@/app/lib/verifyToken";
+
+
 export async function POST(req) {
     try {
+
+        
+
         const { email, password } = await req.json();
         
         await dbConnect();
@@ -28,6 +31,9 @@ export async function POST(req) {
                     path: '/',
                 });
 
+                if (!user.verified)
+                    return Response.json({message: "please verify you account"}, {status: 400});
+
                 return Response.json({message: "Login Successful",  token})
             }
             else {
@@ -37,8 +43,6 @@ export async function POST(req) {
 
             }
         }
-
-
         else {
             return Response.json({message: "User Not Found"}, {status: 400});
         }

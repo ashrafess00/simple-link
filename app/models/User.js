@@ -21,6 +21,15 @@ const UserSchema = new mongoose.Schema({
     firstName: String,
     lastName: String,
     email2: String,
+    verified: {
+        type: Boolean,
+        default: false,
+    },
+    token: {
+        type: String,
+        default: "",
+    }
 })
+
 
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

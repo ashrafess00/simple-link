@@ -34,9 +34,9 @@ export default function Dashboard() {
         .then(userData => {
             setUrls(userData.userUrls);
             setAvatar(userData.avatar);
-            setFirstName(userData.firstName);
-            setLastName(userData.lastName);
-            setEmail2(userData.email2);
+            setFirstName(userData.firstName || "");
+            setLastName(userData.lastName || "");
+            setEmail2(userData.email2 || "");
             setUserId(userData.userId);
         })
         .catch((error) => {

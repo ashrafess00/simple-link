@@ -18,20 +18,3 @@ export const isImageBig = (target) => {
 
     
 }
-
-// export const isImageBig = async (target) => {
-//     const img = new Image();
-
-//     console.log(target);
-//     img.src = target;
-
-//     img.onload = (e) => {
-//         const width = img.width;
-//         const height = img.height;
-//         console.log(width, height);
-//         if (width > 1024 || height > 1024)
-//             throw new Error("image is big");
-//     }
-//     console.log(j);
-    
-// }

@@ -1,6 +1,9 @@
 import dbConnect from "@/app/lib/dbConnect";
 import User from "@/app/models/User";
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
+import crypto from 'crypto';
+
+import { sendEmail } from "@/app/lib/sendEmail";
 
 export async function POST(req) {
     const requestBody = await req.json();
@@ -20,9 +23,12 @@ export async function POST(req) {
 
         const user = new User({
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
+            token: crypto.randomBytes(32).toString("hex"),
         })
 
+        const verifyLink = `http://localhost:3000/verify/${user._id}/${user.token}`;
+        await sendEmail("yopakiw157@dovesilo.com", "VerifyLink", verifyLink);
         const result = await user.save();
         return Response.json({message: "user created successfully", result})
     }

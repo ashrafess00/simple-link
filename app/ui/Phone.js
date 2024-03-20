@@ -14,7 +14,6 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
 
     }, [avatar, setImg])
 
-
     return (
 
         <div className="lg:flex justify-center items-center hidden bg-white  w-1/3  p-16">

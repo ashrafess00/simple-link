@@ -6,10 +6,6 @@ if (!MONGODB_URL) {
     throw new Error ("couldn't access mongodb_url");
 }
 
-// let cached = global.mogoose;
-
-// if (!cached)
-//     cached = global.mongoose = { conn: null, promise: null};
 
 
 let client = null;
@@ -31,19 +27,7 @@ async function dbConnect() {
         bucketName: 'images',
     })
 
-    console.log("connected to the Database");
     return {client, bucket};
-}
-
-async function isAvatarExists(filename) {
-    try {
-        const file = await bucket.find({filename}).toArray();
-
-        return file.length > 0;
-    }
-    catch (error) {
-        return false;
-    }
 }
 
 export default dbConnect;

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import emailjs from 'emailjs-com';
 
 export default function Login() {
 
@@ -26,23 +27,22 @@ export default function Login() {
             return setPasswordError("Can't be empty");
 
         setLoading(true);
-        fetch("/api/login", {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({email, password})
-        })
-        .then(res => {
+        try {
+            const res = await fetch("/api/login", {
+                                    method: 'POST',
+                                    headers: {'Content-Type': 'application/json'},
+                                    body: JSON.stringify({email, password})
+                                    });
+            const { message } = await res.json();
             if (!res.ok)
-                throw new Error("there is an error");
-            
-        })
-        .then(() => {
+                throw new Error(message);
             router.push('/dashboard');
-        })
-        .catch(error => {
+        }
+        catch(error) {
             setLoading(false);
-            setPasswordError("Please check again")
-        })
+            setPasswordError(error.message);
+        }
+
 
     }
 
