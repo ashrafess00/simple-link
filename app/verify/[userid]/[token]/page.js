@@ -3,7 +3,7 @@ import dbConnect from "@/app/lib/dbConnect"
 
 export default async function VerifyToken({params}) {
     try {
-        dbConnect();
+        await dbConnect();
         const user = await User.findOne({_id:params.userid});
         if (!user)
             return <h1>no user</h1>
