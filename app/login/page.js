@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import emailjs from 'emailjs-com';
 
 export default function Login() {
 
@@ -48,20 +47,19 @@ export default function Login() {
     }
 
     return (
-        <div className="p-8 h-dvh md:flex md:justify-center md:items-center md:flex-col">
-            <header className="flex flex-row">
+        <div className="md:grid grid-cols-1 place-items-center h-full">
+            <main className="p-10 rounded-lg max-w-screen-md w-full mx-auto">
+            <header className="mx-auto max-w-xs w-3/4 mb-10">
                 <Image src="images/logo-devlinks-large.svg"
                     width={500}
                     height={500}
                     alt="logo"
-                    className="w-1/2 md:w-3/4 md:mx-auto"
+                    className="w-full"
                     />
-                <div></div>
             </header>
-            <main className="md:p-20 md:rounded-lg mt-20 md:mt-8 max-w-screen-md mx-auto  md:bg-white h-fit">
+            <div className="p-10 md:bg-white w-full">
                 <h3 className="font-bold text-2xl mb-2">Login</h3>
                 <p className="text-grey-1 mb-8">Add your details below to get back into the app</p>
-
                 <form className="flex flex-col text-grey-1" onSubmit={submitForm}>
                     <label className='text-sm mb-2'>Email address</label>
                     <div className="w-full relative mb-8">
@@ -99,11 +97,15 @@ export default function Login() {
                         value={loading ? "Login ..." : "login"}
                         className={`my-6 ${loading ? "btn-primary btn-disabled" : "btn-primary"}`}/>
                 </form>
-
                 <div className="md:flex justify-center gap-1">
                     <p className="text-center text-grey-1">Don&apos;t have an account?</p>
                     <Link className="text-center  text-violet-1 hover:text-violet-2 transition duration-2 block" href="/register">Create account</Link>
                 </div>
+
+            </div>
+
+
+
 
             </main>
         </div>

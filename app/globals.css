@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 body {
-    @apply h-full;
+    height: 100vh !important;
 }
 
 @layer components {
 
+    
     /* buttons  */
     .btn-primary {
         background-color: theme('colors.violet.1');
