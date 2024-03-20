@@ -76,11 +76,11 @@ export default function Register() {
                     />
                 <div></div>
             </header>
-            <main className="md:p-20 md:rounded-lg mt-20 md:mt-8 max-w-screen-2xl mx-auto  md:bg-white h-fit">
+            <main className="md:p-20 md:rounded-lg mt-20 md:mt-8 md:w-[50rem] mx-auto  md:bg-white ">
                 <h3 className="font-bold text-2xl mb-2">Create account</h3>
                 <p className="text-grey-1 mb-8">Let’s get you started sharing your links!</p>
 
-                <form className="flex flex-col text-grey-1" onSubmit={submitForm}>
+                <form className="w-full flex flex-col text-grey-1" onSubmit={submitForm}>
                     <label className='text-sm mb-2'>Email address</label>
                     <div className="w-full relative mb-8">
                         <input placeholder="e.g.alex@email.com"

@@ -27,8 +27,8 @@ export async function POST(req) {
             token: crypto.randomBytes(32).toString("hex"),
         })
 
-        const verifyLink = `http://localhost:3000/verify/${user._id}/${user.token}`;
-        await sendEmail("yopakiw157@dovesilo.com", "VerifyLink", verifyLink);
+        const verifyLink = `${process.env.BASE_URL}/verify/${user._id}/${user.token}`;
+        await sendEmail(email, "VerifyLink", verifyLink);
         const result = await user.save();
         return Response.json({message: "user created successfully", result})
     }

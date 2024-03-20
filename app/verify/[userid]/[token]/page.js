@@ -1,5 +1,4 @@
 import User from "@/app/models/User";
-import Link from "next/link";
 
 
 export default async function VerifyToken({params}) {

@@ -39,6 +39,7 @@ export default function Login() {
             router.push('/dashboard');
         }
         catch(error) {
+
             setLoading(false);
             setPasswordError(error.message);
         }
