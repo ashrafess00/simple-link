@@ -9,7 +9,7 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
 
     useEffect(() => {
         if (avatar) {
-            setImg("/api/" + avatar);
+            setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/" + avatar);
         }
 
     }, [avatar, setImg])

@@ -23,7 +23,7 @@ export default function Profile({avatar,
 
     useEffect(() => {
         if (avatar) {
-            setImg("/api/" + avatar);
+            setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/" + avatar);
         }
     }, [avatar])
 
