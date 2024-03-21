@@ -9,7 +9,18 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
 
     useEffect(() => {
         if (avatar) {
-            setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/" + avatar);
+            fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/avatar/" + avatar)
+            .then(res => {
+                if (!res.ok)
+                    throw new Error("couldn't load image")
+                
+            })
+            .then(data => {
+                setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/avatar/" + avatar);
+            })
+            .catch(error => {
+                setImg("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png");
+            })
         }
 
     }, [avatar, setImg])
@@ -27,7 +38,7 @@ export default function Phone({urls, avatar, firstName, lastName, email2, img, s
                 <div xmlns="http://www.w3.org/1999/xhtml" className="mx-auto mb-4 w-[120px] h-[120px]" >
                     {
                         img
-                        ? <Image alt="phone_avatar" width={400} height={400} className="rounded-full w-full h-full border-violet-1 border-4" src={img} />
+                        ? <img alt="phone_avatar" className="rounded-full w-full h-full border-violet-1 border-4" src={img} />
                         : <div className="bg-grey-2 rounded-full w-full h-full animate-pulse"></div>
                     }
                 </div>

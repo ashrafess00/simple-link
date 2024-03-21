@@ -39,7 +39,7 @@ export default async function Preview({params}) {
                 <div className="shadow-xl md:p-20 bg-white rounded-lg mt-32 flex flex-col justify-center items-center p-8 max-w-md mx-auto">
 
                     {avatar
-                    ? <Image alt="avatar" className="mb-2 border-violet-1 border-8 rounded-full w-32 h-32" src={process.env.NEXT_PUBLIC_BASE_URL + "/api/" + avatar} width={250} height={250} />
+                    ? <Image alt="avatar" className="mb-2 border-violet-1 border-8 rounded-full w-32 h-32" src={process.env.NEXT_PUBLIC_BASE_URL + "/api/avatar/" + avatar} width={250} height={250} />
                     : <div className="w-32 h-32 animate-pulse bg-grey-2 rounded-full"></div>
                     }
                     <h3 className="text-2xl font-bold w-full text-center">

@@ -20,6 +20,6 @@ export async function GET(req, {params}) {
         return Response.json({file});
     }
     catch(error) {
-        return Response.json({error})
+        return Response.json({error}, {status: 400})
     }
 }

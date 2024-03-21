@@ -33,7 +33,9 @@ export const saveAvatar = async (uploadInput) => {
             const res = await fetch("/api/uploadImg", {
                 method: 'POST',
                 body: formData
-            });
+            })
+            
+            
 
             // if (!res.ok)
             //     throw new Error("images wasn't uploaded");

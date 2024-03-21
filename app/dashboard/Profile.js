@@ -23,7 +23,18 @@ export default function Profile({avatar,
 
     useEffect(() => {
         if (avatar) {
-            setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/" + avatar);
+            fetch(process.env.NEXT_PUBLIC_BASE_URL + "/api/avatar/" + avatar)
+            .then(res => {
+                if (!res.ok)
+                    throw new Error("couldn't load image")
+                
+            })
+            .then(data => {
+                setImg(process.env.NEXT_PUBLIC_BASE_URL + "/api/avatar/" + avatar);
+            })
+            .catch(error => {
+                setImg("https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png");
+            })
         }
     }, [avatar])
 
