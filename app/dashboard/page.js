@@ -101,7 +101,7 @@ export default function Dashboard() {
     
 
     return (
-        <div className="p-4 ">
+        <div className="p-4">
 
         <Navbar tab={tab} setTab={setTab} userId={userId} />
 
@@ -145,7 +145,8 @@ export default function Dashboard() {
                 setLastNameError={setLastNameError}
                 />
             }
-        <section className="lg:flex lg:flex-row-reverse justify-between items-center mt-auto lg:text-end bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
+            </div>
+        <section className="fixed max-w-screen-2xl mx-auto z-50  lg:flex lg:flex-row-reverse justify-between items-center mt-auto lg:text-end bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
             <button onClick={saveData} className={`w-full lg:w-fit btn-primary ${linksAreValid() && "btn-disabled"}`}>Save</button>
             {
                 saved 
@@ -155,7 +156,6 @@ export default function Dashboard() {
                 : <div></div>
             }
         </section>
-            </div>
         </main>
 
         </div>
