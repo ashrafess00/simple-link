@@ -37,7 +37,7 @@ export async function POST(req) {
                     //convert blob to stream
                     const buffer = Buffer.from(await blob.arrayBuffer());
                     const stream = Readable.from(buffer);
-                    const uploadStreeam = bucket.openUploadStream(filename, {
+                    const uploadStreeam = await bucket.openUploadStream(filename, {
                         contentType: blob.type,
                         metadata: {
                             userId: userId,
@@ -55,7 +55,6 @@ export async function POST(req) {
                 try {
                 const files = await bucket.find({filename: user.avatar})
                 .toArray()
-    
                     if (files.length > 0) {
                         const file = files[0];
                         bucket.delete(file._id);
