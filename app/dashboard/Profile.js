@@ -95,7 +95,7 @@ export default function Profile({avatar,
                         <Image alt="upload icon" className="rounded-2xl w-100 h-100"  src="/images/icons/icon-upload-image.svg" width={50} height={50} />
                         <p className="text-violet-1">+ Upload Image</p>
                     </> :
-                        <Image alt="avatar" className="rounded-2xl w-full h-full" src={img} width={50} height={50}  />
+                        <img alt="avatar" className="rounded-2xl w-full h-full" src={img} />
                     }
                     </div>
                 
