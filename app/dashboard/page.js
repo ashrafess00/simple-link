@@ -28,6 +28,7 @@ export default function Dashboard() {
     const [saved, setSaved] = useState(false);
     const [savedError, setSavedError] = useState(false);
     const [linksError, setLinksError] = useState([false]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         verifyAndGetUserData()
@@ -57,6 +58,7 @@ export default function Dashboard() {
 
 
     async function saveData(e) {
+        setLoading(true);
         if (tab) {
             try {
                 await addUrls(urls);
@@ -95,6 +97,7 @@ export default function Dashboard() {
             }
             
         }
+        setLoading(false);
     }
 
 
@@ -147,7 +150,11 @@ export default function Dashboard() {
             }
             </div>
         <section className="fixed max-w-screen-2xl mx-auto z-50  lg:flex lg:flex-row-reverse justify-between items-center mt-auto lg:text-end bottom-0 inset-x-0  bg-white p-4 border-t-grey-1 border-t-2">
-            <button onClick={saveData} className={`w-full lg:w-fit btn-primary ${linksAreValid() && "btn-disabled"}`}>Save</button>
+            {
+            loading
+            ? <button onClick={saveData} className={`w-full lg:w-fit btn-primary btn-disabled ${linksAreValid() && "btn-disabled"}`}>Saving ...</button>
+            : <button onClick={saveData} className={`w-full lg:w-fit btn-primary ${linksAreValid() && "btn-disabled"}`}>Save</button>
+            }
             {
                 saved 
                 ? <p className="text-[green]">saved successfully !!!</p>

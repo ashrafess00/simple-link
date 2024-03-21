@@ -27,7 +27,7 @@ export default function CanEdit() {
             </ul>
             {
                 linkCopied &&
-                <p className="absolute w-full w-fit rounded-full opacity-80 -translate-x-2/4 left-2/4 bottom-4 bg-dark text-white py-2 px-4">The link has been copied to your clipboard!</p>
+                <p className="absolute w-full md:w-fit rounded-full opacity-80 -translate-x-2/4 left-2/4 bottom-4 bg-dark text-white py-2 px-4">The link has been copied to your clipboard!</p>
             }
         </>
     )

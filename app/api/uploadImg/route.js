@@ -45,7 +45,7 @@ export async function POST(req) {
                     })
     
                     await uploadStreeam.write(buffer);
-                    uploadStreeam.end();
+                    await uploadStreeam.end();
                     name = filename;
                 }
             }
@@ -73,10 +73,6 @@ export async function POST(req) {
         catch(error) {
             return Response.json({message: "there is an error"}, {status: 500})
         }
-
-
-        
-        
     }
     else {
         return Response.json({message: 'no user'}, {status: 400});

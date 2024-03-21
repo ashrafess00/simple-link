@@ -34,11 +34,8 @@ export const saveAvatar = async (uploadInput) => {
                 method: 'POST',
                 body: formData
             })
-            
-            
-
-            // if (!res.ok)
-            //     throw new Error("images wasn't uploaded");
+            if (!res.ok)
+                throw new Error("couldn't upload image");
         }
     }
 }
