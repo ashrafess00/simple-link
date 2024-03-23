@@ -48,9 +48,10 @@ export default function Register() {
                     setPasswordError("please check again");
                 throw new Error("can't register");
             }
+            return res.json();
         })
         .then((data) => {
-            router.push('login');
+            router.push('/register/verification/' + data.userId);
         })
         .catch(error => {
             setLoading(false);

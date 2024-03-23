@@ -3,7 +3,7 @@ import User from "@/app/models/User";
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 
-import { sendEmail } from "@/app/lib/sendEmail";
+import { sendEmail} from "@/app/lib/sendVerificationLink";
 
 export async function POST(req) {
     const requestBody = await req.json();
@@ -28,9 +28,9 @@ export async function POST(req) {
         })
 
         const verifyLink = `${process.env.BASE_URL}/verify/${user._id}/${user.token}`;
-        await sendEmail(email, "VerifyLink", verifyLink);
+        await sendEmail(email, "email verification", verifyLink);
         const result = await user.save();
-        return Response.json({message: "user created successfully", result})
+        return Response.json({message: "user created successfully", userId: result._id})
     }
     catch(error) {
         return Response.json({message: error.message, error}, {

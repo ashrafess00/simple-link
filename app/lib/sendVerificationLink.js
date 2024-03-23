@@ -1,4 +1,7 @@
+'use server'
 import nodemailer from "nodemailer";
+import dbConnect from "./dbConnect";
+import User from '@/app/models/User';
 
 export const sendEmail = async (email, subject, verifyLink) => {
 
@@ -23,4 +26,22 @@ export const sendEmail = async (email, subject, verifyLink) => {
             <a href="${verifyLink}">${verifyLink}</a>
         `,
     })
+}
+
+export const resendVerificationLink = async (userId) => {
+    await dbConnect();
+    const user = await User.findById(userId);
+
+    if (user) {
+        const email = user.email;
+        let verifyLink;
+        if (user.token)
+            verifyLink = `${process.env.BASE_URL}/verify/${userId}/${user.token}`; 
+        else
+        {
+            user.token = crypto.randomBytes(32).toString("hex");
+            verifyLink = `${process.env.BASE_URL}/verify/${userId}/${user.token}`; 
+        }
+        sendEmail(email, "email verification", verifyLink);
+    }
 }
